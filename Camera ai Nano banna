@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>زوايا التصوير بالذكاء الإصطناعي عبر Nano banna</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#000000',
+                        secondary: '#4d4d4d',
+                        accent: '#8c8c8c',
+                        dark: '#1a1a1a',
+                        'dark-light': '#2b2b2b',
+                    },
+                    fontFamily: {
+                        sans: ['Tajawal', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f2f2f2;
+            color: #1a1a1a;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 900px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border: 1px dashed #d9d9d9;
+        }
+
+        .accordion-button {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .accordion-content.active {
+            max-height: 500px; /* Adjust as needed */
+            transition: max-height 0.5s ease-in;
+        }
+
+        .loader {
+            border: 4px solid #d9d9d9;
+            border-top: 4px solid #1a1a1a;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .social-link {
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .social-link:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto">
+        <header class="flex justify-between items-center mb-6">
+            <div class="flex items-center space-x-2 space-x-reverse">
+                <h1 class="text-3xl font-bold text-black">زوايا التصوير بالذكاء الإصطناعي عبر Nano banna</h1>
+                <p class="text-sm text-gray-700 mt-2">أنشئ صورًا فريدة باستخدام الذكاء الاصطناعي</p>
+            </div>
+            <div class="flex items-center space-x-4 space-x-reverse">
+            </div>
+        </header>
+        
+        <div class="bg-white p-6 rounded-xl shadow-lg mb-6">
+            <div class="flex items-center mb-4 space-x-2 space-x-reverse">
+                <span class="text-xl font-semibold text-black">1. رفع الصورة</span>
+                <span class="text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
+                    </svg>
+                </span>
+            </div>
+            <div class="text-center">
+                <label for="image-upload" class="cursor-pointer">
+                    <div class="inline-flex items-center justify-center bg-black text-white py-3 px-6 rounded-full shadow-lg hover:bg-gray-800 transition-colors duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                        </svg>
+                        <span>اختر صورة</span>
+                    </div>
+                </label>
+                <input id="image-upload" type="file" accept="image/png, image/jpeg, image/webp, image/jpg" class="hidden" onchange="previewImage(event)">
+                <p class="mt-2 text-gray-500 text-sm">التنسيقات المدعومة: PNG, JPG, WEBP</p>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-lg mb-6">
+            <div class="flex items-center mb-4 space-x-2 space-x-reverse">
+                <span class="text-xl font-semibold text-black">2. اختر زاوية</span>
+                <span class="text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-8V7h2v3h-2zm-2.93-3.07a1 1 0 00-1.414 1.414L6.586 10H3a1 1 0 100 2h3.586l-2.828 2.828a1 1 0 101.414 1.414L10 13.414l3.07 3.07a1 1 0 001.414-1.414L11.414 10l2.828-2.828a1 1 0 00-1.414-1.414L10 6.586l-3.07-3.07z" />
+                    </svg>
+                </span>
+            </div>
+            
+            <!-- Accordion for Distance Shots -->
+            <div class="mb-4 rounded-xl overflow-hidden border border-gray-300">
+                <div class="flex items-center justify-between p-4 bg-gray-100 accordion-button" onclick="toggleAccordion(this)">
+                    <span class="font-semibold text-black">زوايا القرب (Distance Shots)</span>
+                    <svg class="w-5 h-5 transition-transform duration-300 transform rotate-180 text-gray-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div class="accordion-content bg-gray-100">
+                    <div class="p-4 space-y-2">
+                        <button onclick="selectAngle('close-up')" class="w-full text-right p-3 rounded-lg bg-gray-300 text-black hover:bg-gray-400 transition-colors duration-200">اللقطة القريبة</button>
+                        <button onclick="selectAngle('full-shot')" class="w-full text-right p-3 rounded-lg bg-gray-300 text-black hover:bg-gray-400 transition-colors duration-200">اللقطة الكاملة</button>
+                        <button onclick="selectAngle('long-shot')" class="w-full text-right p-3 rounded-lg bg-gray-300 text-black hover:bg-gray-400 transition-colors duration-200">اللقطة البعيدة</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accordion for Angles by Position -->
+            <div class="mb-4 rounded-xl overflow-hidden border border-gray-300">
+                <div class="flex items-center justify-between p-4 bg-gray-100 accordion-button" onclick="toggleAccordion(this)">
+                    <span class="font-semibold text-black">زوايا الاتجاه (Angles by Position)</span>
+                    <svg class="w-5 h-5 transition-transform duration-300 transform rotate-180 text-gray-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div class="accordion-content bg-gray-100">
+                    <div class="p-4 space-y-2">
+                        <button onclick="selectAngle('front-angle')" class="w-full text-right p-3 rounded-lg bg-gray-300 text-black hover:bg-gray-400 transition-colors duration-200">الأمامية</button>
+                        <button onclick="selectAngle('side-angle')" class="w-full text-right p-3 rounded-lg bg-gray-300 text-black hover:bg-gray-400 transition-colors duration-200">الجانبية</button>
+                        <button onclick="selectAngle('three-quarter')" class="w-full text-right p-3 rounded-lg bg-gray-300 text-black hover:bg-gray-400 transition-colors duration-200">ثلاثة أرباع</button>
+                        <button onclick="selectAngle('rear-angle')" class="w-full text-right p-3 rounded-lg bg-gray-300 text-black hover:bg-gray-400 transition-colors duration-200">الخلفية</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accordion for High & Low Angles -->
+            <div class="mb-4 rounded-xl overflow-hidden border border-gray-300">
+                <div class="flex items-center justify-between p-4 bg-gray-100 accordion-button" onclick="toggleAccordion(this)">
+                    <span class="font-semibold text-black">زوايا الارتفاع (High & Low Angles)</span>
+                    <svg class="w-5 h-5 transition-transform duration-300 transform rotate-180 text-gray-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div class="accordion-content bg-gray-100">
+                    <div class="p-4 space-y-2">
+                        <button onclick="selectAngle('high-angle')" class="w-full text-right p-3 rounded-lg bg-gray-300 text-black hover:bg-gray-400 transition-colors duration-200">زاوية عالية</button>
+                        <button onclick="selectAngle('birds-eye')" class="w-full text-right p-3 rounded-lg bg-gray-300 text-black hover:bg-gray-400 transition-colors duration-200">عين الطائر</button>
+                        <button onclick="selectAngle('overhead')" class="w-full text-right p-3 rounded-lg bg-gray-300 text-black hover:bg-gray-400 transition-colors duration-200">الفوقية</button>
+                        <button onclick="selectAngle('low-angle')" class="w-full text-right p-3 rounded-lg bg-gray-300 text-black hover:bg-gray-400 transition-colors duration-200">زاوية منخفضة</button>
+                        <button onclick="selectAngle('worms-eye')" class="w-full text-right p-3 rounded-lg bg-gray-300 text-black hover:bg-gray-400 transition-colors duration-200">عين الدودة</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accordion for Special Effects -->
+            <div class="mb-4 rounded-xl overflow-hidden border border-gray-300">
+                <div class="flex items-center justify-between p-4 bg-gray-100 accordion-button" onclick="toggleAccordion(this)">
+                    <span class="font-semibold text-black">زوايا خاصة للتأثير (Special Effect)</span>
+                    <svg class="w-5 h-5 transition-transform duration-300 transform rotate-180 text-gray-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div class="accordion-content bg-gray-100">
+                    <div class="p-4 space-y-2">
+                        <button onclick="selectAngle('dutch-angle')" class="w-full text-right p-3 rounded-lg bg-gray-300 text-black hover:bg-gray-400 transition-colors duration-200">الزاوية المائلة</button>
+                        <button onclick="selectAngle('silhouette')" class="w-full text-right p-3 rounded-lg bg-gray-300 text-black hover:bg-gray-400 transition-colors duration-200">السيليويت/الظل</button>
+                        <button onclick="selectAngle('reflection')" class="w-full text-right p-3 rounded-lg bg-gray-300 text-black hover:bg-gray-400 transition-colors duration-200">الانعكاس</button>
+                        <button onclick="selectAngle('over-the-shoulder')" class="w-full text-right p-3 rounded-lg bg-gray-300 text-black hover:bg-gray-400 transition-colors duration-200">من فوق الكتف</button>
+                        <button onclick="selectAngle('eye-level')" class="w-full text-right p-3 rounded-lg bg-gray-300 text-black hover:bg-gray-400 transition-colors duration-200">منظور العين</button>
+                        <button onclick="selectAngle('macro')" class="w-full text-right p-3 rounded-lg bg-gray-300 text-black hover:bg-gray-400 transition-colors duration-200">تفصيلة مقربة</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <h2 class="text-lg font-semibold mb-4 text-black">الصورة الأصلية</h2>
+                <div id="original-image-container" class="card h-96 flex items-center justify-center rounded-xl relative">
+                    <div id="original-placeholder" class="text-center text-gray-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                        </svg>
+                        <span>لم يتم رفع صورة</span>
+                    </div>
+                    <img id="original-image-preview" src="#" alt="Original Image" class="hidden h-full w-full object-contain rounded-xl">
+                </div>
+            </div>
+            
+            <div>
+                <h2 class="text-lg font-semibold mb-4 text-black">الصورة المنشأة</h2>
+                <div id="generated-image-container" class="card h-96 flex items-center justify-center rounded-xl relative">
+                    <div id="generated-placeholder" class="text-center text-gray-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m0 12v1m9-9h-1m-17 0H3m-1 8h-1m-1 0H3M3 12h-1m-1 0H3" />
+                        </svg>
+                        <span>سيتم عرض الصورة هنا</span>
+                    </div>
+                    <p id="loading-text" class="absolute hidden text-black font-bold text-lg mt-4 z-10">صلي على النبي</p>
+                    <div id="loading-indicator" class="loader hidden"></div>
+                    <img id="generated-image-preview" src="#" alt="Generated Image" class="hidden h-full w-full object-contain rounded-xl">
+                    <button id="download-button" onclick="downloadImage()" class="hidden absolute bottom-4 right-4 bg-gray-800 text-white p-2 rounded-full shadow-lg hover:bg-gray-900 transition-colors duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="mt-8 text-center text-gray-500 text-sm">
+            <p class="mb-1 text-xs">لا تنسونا من خالص دعواتكم</p>
+            <p class="mb-2">تطوير الأمين عجلان Ai</p>
+            <div class="flex justify-center space-x-4 space-x-reverse">
+                <a href="https://www.facebook.com/share/1BLjs7kqEA/" target="_blank" class="text-gray-700 hover:text-black social-link">
+                    <i class="fab fa-facebook fa-2x"></i>
+                </a>
+                <a href="https://www.instagram.com/aglan_711?igsh=aTRpY3VmdGFqZjI5" target="_blank" class="text-gray-700 hover:text-black social-link">
+                    <i class="fab fa-instagram fa-2x"></i>
+                </a>
+                <a href="https://wa.me/+967770863445" target="_blank" class="text-gray-700 hover:text-black social-link">
+                    <i class="fab fa-whatsapp fa-2x"></i>
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Custom Modal/Message Box -->
+    <div id="message-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-6 rounded-lg text-center shadow-xl max-w-sm w-full mx-4">
+            <h3 id="modal-title" class="text-xl font-bold mb-2 text-black"></h3>
+            <p id="modal-message" class="text-gray-700 mb-4"></p>
+            <button onclick="closeModal()" class="bg-black text-white py-2 px-6 rounded-full hover:bg-gray-800 transition-colors">موافق</button>
+        </div>
+    </div>
+
+    <script>
+        // Set Firebase debug level
+        console.log("Setting console log level to Debug.");
+        
+        // Global variables for API calls
+        const apiKey = "";
+        const generationApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${apiKey}`;
+        const visionApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+        let originalImageBase64 = null;
+        let selectedAnglePrompt = "";
+        let generatedImageDataUrl = null;
+
+        // Function to show custom modal instead of alert()
+        function showModal(title, message) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-message').innerText = message;
+            document.getElementById('message-modal').classList.remove('hidden');
+        }
+
+        // Function to close the custom modal
+        function closeModal() {
+            document.getElementById('message-modal').classList.add('hidden');
+        }
+
+        function refreshPage() {
+            window.location.reload();
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        function toggleAccordion(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('svg');
+            const isExpanded = content.classList.toggle('active');
+
+            if (isExpanded) {
+                icon.classList.remove('rotate-180');
+                content.style.maxHeight = content.scrollHeight + 'px';
+            } else {
+                icon.classList.add('rotate-180');
+                content.style.maxHeight = '0';
+            }
+        }
+
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const originalImagePreview = document.getElementById('original-image-preview');
+                    const originalPlaceholder = document.getElementById('original-placeholder');
+                    originalImageBase64 = e.target.result.split(',')[1];
+                    originalImagePreview.src = e.target.result;
+                    originalImagePreview.classList.remove('hidden');
+                    originalPlaceholder.classList.add('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function showLoading() {
+            const generatedPlaceholder = document.getElementById('generated-placeholder');
+            const generatedImagePreview = document.getElementById('generated-image-preview');
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const downloadButton = document.getElementById('download-button');
+            const loadingText = document.getElementById('loading-text');
+            generatedImagePreview.classList.add('hidden');
+            generatedPlaceholder.classList.add('hidden');
+            loadingIndicator.classList.remove('hidden');
+            downloadButton.classList.add('hidden');
+            loadingText.classList.remove('hidden');
+        }
+
+        function hideLoading() {
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const loadingText = document.getElementById('loading-text');
+            loadingIndicator.classList.add('hidden');
+            loadingText.classList.add('hidden');
+        }
+
+        async function generateImage() {
+            if (!originalImageBase64) {
+                showModal('خطأ', 'الرجاء رفع صورة أولاً.');
+                return;
+            }
+            if (!selectedAnglePrompt) {
+                showModal('خطأ', 'الرجاء اختيار زاوية كاميرا أولاً.');
+                return;
+            }
+
+            const promptText = `Generate a new image based on the input image. Apply the following camera angle to the image: ${selectedAnglePrompt}.`;
+            const payload = {
+                contents: [{
+                    parts: [
+                        { text: promptText },
+                        { inlineData: { mimeType: 'image/jpeg', data: originalImageBase64 } }
+                    ]
+                }],
+                generationConfig: {
+                    responseModalities: ['TEXT', 'IMAGE']
+                }
+            };
+
+            showLoading();
+            let response;
+            try {
+                response = await fetch(generationApiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    const errorBody = await response.text();
+                    console.error('API Error Response:', errorBody);
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                const base64Data = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
+
+                if (base64Data) {
+                    const generatedImagePreview = document.getElementById('generated-image-preview');
+                    const generatedPlaceholder = document.getElementById('generated-placeholder');
+                    const downloadButton = document.getElementById('download-button');
+                    
+                    generatedImageDataUrl = `data:image/png;base64,${base64Data}`;
+                    generatedImagePreview.src = generatedImageDataUrl;
+                    
+                    generatedImagePreview.classList.remove('hidden');
+                    generatedPlaceholder.classList.add('hidden');
+                    downloadButton.classList.remove('hidden');
+                } else {
+                    showModal('خطأ', 'فشل في إنشاء الصورة. يرجى المحاولة مرة أخرى.');
+                }
+            } catch (error) {
+                console.error('Error generating image:', error);
+                showModal('خطأ', 'حدث خطأ أثناء الاتصال بالخادم.');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        function selectAngle(angle) {
+            selectedAnglePrompt = angle;
+            generateImage();
+        }
+
+        function downloadImage() {
+            if (generatedImageDataUrl) {
+                const link = document.createElement('a');
+                link.href = generatedImageDataUrl;
+                link.download = 'generated-image.png';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } else {
+                showModal('خطأ', 'لا توجد صورة لتحميلها.');
+            }
+        }
+    </script>
+</body>
+</html>
